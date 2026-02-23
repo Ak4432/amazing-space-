@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Space | Professional Massage & Wellness</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display for headings, Inter for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fbfaf8;
+            color: #2d3436;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #8a9a5b;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        /* WhatsApp Floating Bot Animation */
+        @keyframes pulse-whatsapp {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .whatsapp-float {
+            animation: pulse-whatsapp 2s infinite;
+        }
+        /* Chat Scrollbar Styling */
+        #chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #chat-messages::-webkit-scrollbar-thumb {
+            background-color: #d6d3d1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass-card">
+        <div class="text-2xl font-bold tracking-tighter text-stone-800">AMAZING <span class="text-sage-600 font-light italic text-[#8a9a5b]">Space</span></div>
+        <div class="hidden md:flex space-x-8 items-center text-sm uppercase tracking-widest font-medium">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#" onclick="openWhatsAppBot(); return false;" class="px-5 py-2 bg-[#8a9a5b] text-white rounded-full hover:bg-[#7a8a4b] transition-colors flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4"></i> Book Now
+            </a>
+        </div>
+        <div class="md:hidden flex items-center gap-4">
+            <a href="#" onclick="openWhatsAppBot(); return false;" class="bg-[#8a9a5b] text-white p-2 rounded-full shadow-lg">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+            </a>
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Full Screen Video Background -->
+        <div class="absolute inset-0 z-0 bg-stone-900" id="hero-video-bg">
+            <iframe 
+                src="https://player.vimeo.com/video/1167319299?autoplay=1&loop=1&muted=1&background=1" 
+                class="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-screen min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-90" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <!-- Subtle dark overlay to improve text contrast -->
+            <div class="absolute inset-0 bg-stone-900/40"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center mt-10">
+            <div id="hero-content" class="max-w-3xl">
+                <span class="inline-block text-white font-bold tracking-[0.2em] uppercase text-xs mb-4 bg-[#8a9a5b] px-4 py-2 rounded-full shadow-sm">Wellness & Tranquility</span>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 text-white drop-shadow-lg">
+                    Find your <br>
+                    <span class="italic font-normal serif">inner calm.</span>
+                </h1>
+                <p class="text-lg text-stone-100 mb-8 max-w-xl mx-auto leading-relaxed font-medium drop-shadow-md">
+                    A boutique massage experience designed to restore your body, mind, and spirit in the heart of the city.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+                    <a href="#services" class="px-8 py-4 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-transform hover:scale-105 inline-block font-medium">Explore Services</a>
+                    <a href="#" onclick="openWhatsAppBot(); return false;" class="px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white hover:text-stone-900 transition-all inline-block flex items-center justify-center gap-2 font-medium">
+                        <i data-lucide="message-square" class="w-5 h-5"></i> Chat with Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Curated Treatments</h2>
+                <div class="w-20 h-1 bg-[#8a9a5b] mx-auto mb-6"></div>
+                <p class="text-stone-500 max-w-2xl mx-auto">Select from our range of therapeutic sessions tailored to your unique needs.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1: Swedish Massage -->
+                <div class="reveal service-card group p-6 rounded-3xl border border-stone-100 hover:border-[#8a9a5b] transition-all duration-500 hover:shadow-xl bg-[#fbfaf8] flex flex-col">
+                    <div class="overflow-hidden rounded-2xl mb-6 h-48 w-full relative">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=800" alt="Swedish Massage" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center text-[#8a9a5b] shadow-sm">
+                            <i data-lucide="flower-2" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Swedish Massage</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6 flex-grow">Long, gliding strokes to improve circulation and release surface tension. Perfect for relaxation.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-100">
+                        <span class="font-bold text-lg">$90 <small class="text-xs font-normal">/ 60min</small></span>
+                        <a href="#" onclick="openWhatsAppBot('Swedish Massage'); return false;" class="px-4 py-2 bg-stone-100 rounded-full text-stone-800 font-medium text-sm flex items-center group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+                            WhatsApp <i data-lucide="message-circle" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2: Deep Tissue -->
+                <div class="reveal service-card group p-6 rounded-3xl border border-stone-100 hover:border-[#8a9a5b] transition-all duration-500 hover:shadow-xl bg-[#fbfaf8] flex flex-col">
+                    <div class="overflow-hidden rounded-2xl mb-6 h-48 w-full relative">
+                        <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&q=80&w=800" alt="Deep Tissue Massage" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center text-[#8a9a5b] shadow-sm">
+                            <i data-lucide="mountain" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Deep Tissue</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6 flex-grow">Focused pressure on deep muscle layers to address chronic tension, stiffness, and pain.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-100">
+                        <span class="font-bold text-lg">$110 <small class="text-xs font-normal">/ 60min</small></span>
+                        <a href="#" onclick="openWhatsAppBot('Deep Tissue Massage'); return false;" class="px-4 py-2 bg-stone-100 rounded-full text-stone-800 font-medium text-sm flex items-center group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+                            WhatsApp <i data-lucide="message-circle" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3: Aromatherapy -->
+                <div class="reveal service-card group p-6 rounded-3xl border border-stone-100 hover:border-[#8a9a5b] transition-all duration-500 hover:shadow-xl bg-[#fbfaf8] flex flex-col">
+                    <div class="overflow-hidden rounded-2xl mb-6 h-48 w-full relative">
+                        <img src="https://cdn.phototourl.com/uploads/2026-02-23-3f374cd7-82f1-4d21-a7ea-36681414de95.png" alt="Aromatherapy Massage" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center text-[#8a9a5b] shadow-sm">
+                            <i data-lucide="wind" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Aromatherapy</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6 flex-grow">Healing power of essential oils combined with light, rhythmic touch for total relaxation.</p>
+                    <div class="flex justify-between items-center pt-4 border-t border-stone-100">
+                        <span class="font-bold text-lg">$95 <small class="text-xs font-normal">/ 60min</small></span>
+                        <a href="#" onclick="openWhatsAppBot('Aromatherapy Massage'); return false;" class="px-4 py-2 bg-stone-100 rounded-full text-stone-800 font-medium text-sm flex items-center group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+                            WhatsApp <i data-lucide="message-circle" class="w-4 h-4 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-[#f4f3ef]">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal relative">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" 
+                         alt="Interior Sanctuary" 
+                         class="rounded-3xl shadow-lg w-full h-[500px] object-cover">
+                    <div class="absolute -top-10 -right-10 bg-[#8a9a5b] text-white p-10 rounded-full w-40 h-40 flex flex-col items-center justify-center text-center hidden md:flex">
+                        <span class="text-3xl font-bold">10+</span>
+                        <span class="text-[10px] uppercase tracking-widest">Years of Bliss</span>
+                    </div>
+                </div>
+                <div class="reveal">
+                    <h2 class="text-4xl font-bold mb-6">Creating a sanctuary of peace in a busy world.</h2>
+                    <p class="text-stone-600 mb-6 leading-relaxed">
+                        At Amazing Space, we believe that wellness is not a luxury, but a necessity. Our space was founded on the principle that environment affects healing.
+                    </p>
+                    <p class="text-stone-600 mb-8 leading-relaxed">
+                        Every element—from the scent of sandalwood upon entry to the temperature of our organic linens—is meticulously curated to ensure you leave feeling entirely new.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center space-x-3">
+                            <i data-lucide="check-circle" class="text-[#8a9a5b] w-5 h-5"></i>
+                            <span class="text-sm font-medium">Licensed & Certified Therapists</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i data-lucide="check-circle" class="text-[#8a9a5b] w-5 h-5"></i>
+                            <span class="text-sm font-medium">100% Organic Essential Oils</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i data-lucide="check-circle" class="text-[#8a9a5b] w-5 h-5"></i>
+                            <span class="text-sm font-medium">Customized Aftercare Plans</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map & Contact Footer -->
+    <footer id="contact" class="bg-stone-900 text-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 mb-16">
+                <!-- Contact Details -->
+                <div class="grid sm:grid-cols-2 gap-12">
+                    <div class="sm:col-span-2">
+                        <h2 class="text-3xl font-bold mb-6">AMAZING Space</h2>
+                        <p class="text-stone-400 max-w-sm mb-8">Ready to rediscover your peace? Visit us or book your session directly via WhatsApp today.</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full border border-stone-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full border border-stone-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+                                <i data-lucide="facebook" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" onclick="openWhatsAppBot(); return false;" class="w-10 h-10 rounded-full border border-[#25D366] bg-[#25D366] text-white flex items-center justify-center hover:bg-white hover:text-[#25D366] transition-colors">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm uppercase tracking-widest font-bold mb-6 text-stone-500">Location</h4>
+                        <p class="text-stone-300">123 Serenity Way<br>Wellness District<br>New York, NY 10001</p>
+                    </div>
+                    <div>
+                        <h4 class="text-sm uppercase tracking-widest font-bold mb-6 text-stone-500">Hours</h4>
+                        <p class="text-stone-300">Mon - Fri: 9am - 8pm<br>Sat - Sun: 10am - 6pm</p>
+                    </div>
+                </div>
+
+                <!-- Google Maps Embed - NO FILTER -->
+                <div class="w-full h-[350px] lg:h-full min-h-[350px] rounded-2xl overflow-hidden shadow-2xl border border-stone-800 relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2155694269153!2d-73.98782398459405!3d40.75727097932662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1683838493010!5m2!1sen!2sus" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="w-full h-full opacity-100 contrast-100 brightness-100">
+                    </iframe>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-stone-800 text-center text-stone-500 text-xs flex flex-col md:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Amazing Space Massage & Wellness. All rights reserved.</p>
+                <p>Healing begins here.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Bot Widget -->
+    <div class="fixed bottom-8 right-8 z-[100] group">
+        <!-- Bot Message Bubble -->
+        <div class="absolute bottom-full right-0 mb-4 w-64 bg-white text-stone-800 p-4 rounded-2xl shadow-2xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all pointer-events-none text-xs border border-stone-100">
+            <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 bg-[#25D366] rounded-full"></div>
+                <span class="font-bold text-[#8a9a5b]">Amazing Space Receptionist</span>
+            </div>
+            <p>Ready to relax? Chat with us to instantly book your slot!</p>
+        </div>
+        <!-- Floating Button -->
+        <a href="#" onclick="openWhatsAppBot(); return false;" class="whatsapp-float flex items-center justify-center w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl hover:scale-110 transition-transform relative">
+            <i data-lucide="message-circle" class="w-8 h-8"></i>
+        </a>
+    </div>
+
+    <!-- IN-PAGE CHAT BOT MODAL -->
+    <div id="chat-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[600px] max-h-[90vh] scale-95 transition-transform duration-300 transform" id="chat-container">
+            
+            <!-- Chat Header -->
+            <div class="bg-[#8a9a5b] text-white p-4 flex justify-between items-center shadow-md z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold leading-tight">Amazing Bot</h3>
+                        <p class="text-xs text-white/90 flex items-center gap-1 mt-0.5">
+                            <span class="w-2 h-2 bg-[#25D366] rounded-full inline-block animate-pulse"></span> Online
+                        </p>
+                    </div>
+                </div>
+                <button onclick="closeChatModal()" class="text-white hover:text-stone-200 transition-colors p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div id="chat-messages" class="flex-grow p-5 overflow-y-auto flex flex-col gap-4 bg-[#fbfaf8]">
+                <!-- Messages will be injected here via JS -->
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="p-4 bg-white border-t border-stone-100 flex items-center gap-3 z-10" id="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Type your answer here..." class="flex-grow px-5 py-3 rounded-full border border-stone-200 bg-stone-50 focus:outline-none focus:border-[#8a9a5b] focus:ring-1 focus:ring-[#8a9a5b] transition-all text-sm" onkeypress="handleChatKeyPress(event)">
+                
+                <!-- Time Selection Dropdown (Hidden by default) -->
+                <select id="chat-select" class="hidden flex-grow px-5 py-3 rounded-full border border-stone-200 bg-stone-50 focus:outline-none focus:border-[#8a9a5b] focus:ring-1 focus:ring-[#8a9a5b] transition-all text-sm">
+                    <option value="" disabled selected>Select an available time...</option>
+                    <option value="09:00 AM">09:00 AM</option>
+                    <option value="09:30 AM">09:30 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="10:30 AM">10:30 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="11:30 AM">11:30 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="12:30 PM">12:30 PM</option>
+                    <option value="01:00 PM">01:00 PM</option>
+                    <option value="01:30 PM">01:30 PM</option>
+                    <option value="02:00 PM">02:00 PM</option>
+                    <option value="02:30 PM">02:30 PM</option>
+                    <option value="03:00 PM">03:00 PM</option>
+                    <option value="03:30 PM">03:30 PM</option>
+                    <option value="04:00 PM">04:00 PM</option>
+                    <option value="04:30 PM">04:30 PM</option>
+                    <option value="05:00 PM">05:00 PM</option>
+                    <option value="05:30 PM">05:30 PM</option>
+                    <option value="06:00 PM">06:00 PM</option>
+                    <option value="06:30 PM">06:30 PM</option>
+                    <option value="07:00 PM">07:00 PM</option>
+                    <option value="07:30 PM">07:30 PM</option>
+                    <option value="08:00 PM">08:00 PM</option>
+                </select>
+
+                <button id="chat-send-btn" onclick="handleChatSubmit()" class="w-12 h-12 bg-[#8a9a5b] text-white rounded-full flex items-center justify-center hover:bg-[#7a8a4b] transition-colors flex-shrink-0 shadow-md">
+                    <i data-lucide="send" class="w-5 h-5 ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.onload = () => {
+            // Hero Animations
+            const tl = gsap.timeline();
+            
+            tl.from("#hero-video-bg", { opacity: 0, duration: 2, ease: "power2.inOut" })
+              .from("#hero-content", { y: 40, opacity: 0, duration: 1.2, ease: "power4.out" }, "-=1")
+              .from("#hero-content h1", { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8")
+              .from("#hero-content p", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6")
+              .from("#hero-content div.flex", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6");
+
+            // Scroll Reveals
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                gsap.to(el, {
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 0, opacity: 1, duration: 1, ease: "power2.out"
+                });
+            });
+
+            // Hover animations for service cards
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => gsap.to(card.querySelector('i'), { rotate: 15, scale: 1.1, duration: 0.3 }));
+                card.addEventListener('mouseleave', () => gsap.to(card.querySelector('i'), { rotate: 0, scale: 1, duration: 0.3 }));
+            });
+        };
+
+        // --- INTERACTIVE CHAT BOT LOGIC ---
+        let chatState = 0;
+        let bookingData = { name: '', service: '', date: '', time: '', phone: '', email: '' };
+        
+        function setInputType(type) {
+            const input = document.getElementById('chat-input');
+            const select = document.getElementById('chat-select');
+            const btn = document.getElementById('chat-send-btn');
+            
+            input.classList.add('hidden');
+            select.classList.add('hidden');
+            btn.classList.remove('hidden');
+
+            if (type === 'none') {
+                btn.classList.add('hidden');
+            } else if (type === 'time') {
+                select.classList.remove('hidden');
+                select.value = "";
+                select.focus();
+            } else {
+                input.type = type;
+                input.classList.remove('hidden');
+                input.focus();
+            }
+        }
+
+        function openWhatsAppBot(serviceName = '') {
+            const modal = document.getElementById('chat-modal');
+            const container = document.getElementById('chat-container');
+            const messages = document.getElementById('chat-messages');
+            const input = document.getElementById('chat-input');
+            
+            // Reset Chat Interface
+            messages.innerHTML = '';
+            chatState = 0;
+            bookingData = { name: '', service: serviceName, date: '', time: '', phone: '', email: '' };
+            
+            setInputType('text');
+            input.value = '';
+            input.placeholder = 'Type your full name...';
+            input.disabled = false;
+            
+            // Show Modal
+            modal.classList.remove('hidden');
+            // Force reflow for transitions
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            container.classList.remove('scale-95');
+            
+            // Initial Bot Greeting
+            setTimeout(() => {
+                addBotMessage("Hi! Welcome to Amazing Space. 👋");
+                setTimeout(() => {
+                    addBotMessage("To get started, what is your **Name**?");
+                    input.focus();
+                }, 800);
+            }, 400);
+        }
+
+        function closeChatModal() {
+            const modal = document.getElementById('chat-modal');
+            const container = document.getElementById('chat-container');
+            
+            modal.classList.add('opacity-0');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function addBotMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'self-start max-w-[85%] bg-white border border-stone-200 p-3.5 rounded-2xl rounded-tl-sm shadow-sm text-sm text-stone-700 opacity-0 transform translate-y-4 leading-relaxed';
+            msgDiv.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-stone-900">$1</strong>');
+            document.getElementById('chat-messages').appendChild(msgDiv);
+            scrollToBottom();
+            
+            gsap.to(msgDiv, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" });
+        }
+
+        function addUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'self-end max-w-[85%] bg-[#8a9a5b] text-white p-3.5 rounded-2xl rounded-tr-sm shadow-sm text-sm opacity-0 transform translate-y-4 leading-relaxed';
+            msgDiv.textContent = text;
+            document.getElementById('chat-messages').appendChild(msgDiv);
+            scrollToBottom();
+            
+            gsap.to(msgDiv, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" });
+        }
+
+        function scrollToBottom() {
+            const messages = document.getElementById('chat-messages');
+            messages.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' });
+        }
+
+        function addServicePicker(options) {
+            const container = document.createElement('div');
+            container.className = 'flex flex-col gap-2 mt-2 self-start w-[85%] opacity-0 transform translate-y-4';
+            
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'px-4 py-3 bg-stone-100 hover:bg-[#8a9a5b] hover:text-white border border-stone-200 rounded-xl text-sm transition-all text-stone-700 text-left shadow-sm font-medium flex justify-between items-center group';
+                btn.innerHTML = `<span>${opt}</span> <i data-lucide="chevron-right" class="w-4 h-4 opacity-50 group-hover:opacity-100"></i>`;
+                
+                btn.onclick = function() {
+                    // Disable all buttons once one is clicked
+                    Array.from(container.children).forEach(b => {
+                        b.disabled = true;
+                        b.classList.add('opacity-50', 'cursor-not-allowed');
+                        b.classList.remove('hover:bg-[#8a9a5b]', 'hover:text-white');
+                    });
+                    btn.classList.add('bg-[#8a9a5b]', 'text-white', 'border-[#8a9a5b]', 'opacity-100');
+                    btn.classList.remove('opacity-50');
+                    handleChatSubmit(opt);
+                };
+                container.appendChild(btn);
+            });
+            
+            document.getElementById('chat-messages').appendChild(container);
+            lucide.createIcons({ root: container }); // Re-render new icons
+            scrollToBottom();
+            gsap.to(container, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" });
+            
+            setInputType('none'); // Hide input text field while picking service
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                handleChatSubmit();
+            }
+        }
+
+        function handleChatSubmit(forceValue = null) {
+            const input = document.getElementById('chat-input');
+            const select = document.getElementById('chat-select');
+            
+            let rawText = forceValue;
+            
+            // Extract value from either the input or select dropdown
+            if (!rawText) {
+                if (!input.classList.contains('hidden')) rawText = input.value.trim();
+                else if (!select.classList.contains('hidden')) rawText = select.value.trim();
+            }
+            
+            if (!rawText) return;
+            
+            // Format display text nicely for dates
+            let displayText = rawText;
+            if (input.type === 'date') {
+                const parts = rawText.split('-');
+                const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+                displayText = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' 
+                });
+            }
+
+            addUserMessage(displayText);
+            if (!input.classList.contains('hidden')) input.value = '';
+            
+            processState(rawText, displayText);
+        }
+
+        function processState(rawText, displayText) {
+            setTimeout(() => {
+                if (chatState === 0) {
+                    bookingData.name = rawText;
+                    if (bookingData.service) {
+                        addBotMessage(`Nice to meet you, **${rawText}**! I see you want to book a **${bookingData.service}**.`);
+                        setTimeout(() => askForDate(), 800);
+                    } else {
+                        addBotMessage(`Nice to meet you, **${rawText}**! Which **Service** would you like to book?`);
+                        addServicePicker(['Swedish Massage', 'Deep Tissue', 'Aromatherapy']);
+                        chatState = 1;
+                    }
+                } else if (chatState === 1) {
+                    bookingData.service = rawText;
+                    addBotMessage(`Great choice, **${rawText}** is wonderful.`);
+                    setTimeout(() => askForDate(), 800);
+                } else if (chatState === 2) {
+                    bookingData.date = displayText;
+                    addBotMessage(`Perfect. What **Time** would you prefer on ${displayText}?`);
+                    setInputType('time');
+                    chatState = 3;
+                } else if (chatState === 3) {
+                    bookingData.time = rawText;
+                    addBotMessage("Got it! What is your **Phone Number**?");
+                    setInputType('tel');
+                    document.getElementById('chat-input').placeholder = 'e.g., +1 555 123 4567';
+                    chatState = 4;
+                } else if (chatState === 4) {
+                    bookingData.phone = rawText;
+                    addBotMessage("Thanks! Lastly, what is your **Email Address** for confirmation?");
+                    setInputType('email');
+                    document.getElementById('chat-input').placeholder = 'your@email.com';
+                    chatState = 5;
+                } else if (chatState === 5) {
+                    bookingData.email = rawText;
+                    addBotMessage("Awesome! I have all the details. Redirecting you to our secure WhatsApp to finalize your booking... 🚀");
+                    setInputType('text');
+                    const input = document.getElementById('chat-input');
+                    input.placeholder = 'Redirecting...';
+                    input.disabled = true;
+                    document.getElementById('chat-send-btn').disabled = true;
+                    chatState = 6;
+                    
+                    setTimeout(() => finalizeBooking(), 2000);
+                }
+            }, 600);
+        }
+
+        function askForDate() {
+            addBotMessage("Please select a **Date** for your session.");
+            setInputType('date');
+            const input = document.getElementById('chat-input');
+            
+            // Restrict past dates by setting the minimum datetime to right now
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            input.min = `${yyyy}-${mm}-${dd}`;
+            
+            chatState = 2;
+        }
+
+        function finalizeBooking() {
+            const phone = '15550123456';
+            const message = `Hello Amazing Space! 👋\n\nI would like to confirm my appointment. Here are my details:\n\n👤 *Name:* ${bookingData.name}\n💆‍♀️ *Service:* ${bookingData.service}\n📅 *Date:* ${bookingData.date}\n⏰ *Time:* ${bookingData.time}\n📱 *Phone:* ${bookingData.phone}\n✉️ *Email:* ${bookingData.email}\n\nPlease confirm my slot!`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
+            closeChatModal();
+        }
+    </script>
+</body>
+</html>
